@@ -11,9 +11,8 @@ import upickle.default._
 case class Cart(letters: String)
 
 class GetLettersFromCart(implicit ee: ExecutionEnv)
-    extends Specification
-    with BaseTckTest {
-
+  extends Specification
+  with BaseTckTest {
   "GetLettersFromCart" should {
 
     val cart123 = "cart/123"
@@ -23,11 +22,13 @@ class GetLettersFromCart(implicit ee: ExecutionEnv)
       get <- go(HttpRequest(uri = url(cart123)))
     } yield get
 
-    "get letters from cart" >> {
+    "respond with status 200" >> {
       getCart.map(_.status) should === (ok200).awaitFor(timeout)
+    }
+
+    "contain inserted letters" >> {
       body(getCart).map(read[Cart]) should === (Cart(fooBAR)).awaitFor(timeout)
     }
 
   }
-
 }
