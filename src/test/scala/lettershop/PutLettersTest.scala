@@ -1,6 +1,6 @@
 package lettershop
 
-import akka.http.scaladsl.model.HttpMethods
+import akka.http.scaladsl.model.HttpMethods._
 import akka.http.scaladsl.model.HttpRequest
 import org.specs2.concurrent.ExecutionEnv
 import org.specs2.mutable.Specification
@@ -15,10 +15,10 @@ class PutLettersTest(implicit ee: ExecutionEnv)
 
     val cart = "cart/a1b2"
     val overwritten = "qwerty"
-    val put = go(HttpRequest(method = HttpMethods.PUT, uri = url(s"$cart/abc")))
+    val put = go(HttpRequest(method = PUT, uri = url(s"$cart/abc")))
     val getCart = for {
       _ <- put
-      _ <- go(HttpRequest(method = HttpMethods.PUT, uri = url(s"$cart/$overwritten")))
+      _ <- go(HttpRequest(method = PUT, uri = url(s"$cart/$overwritten")))
       get <- go(HttpRequest(uri = url(cart)))
     } yield get
 
