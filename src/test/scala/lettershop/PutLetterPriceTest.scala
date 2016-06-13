@@ -12,8 +12,8 @@ import upickle.default._
 case class Price(price: Double)
 
 class PutLetterPriceTest(implicit ee: ExecutionEnv)
-  extends Specification
-  with BaseTckTest {
+    extends Specification
+    with BaseTckTest {
 
   "PutLetterPrice" should {
 
@@ -23,7 +23,8 @@ class PutLetterPriceTest(implicit ee: ExecutionEnv)
     val priceLetter = go(HttpRequest(
       method = PUT,
       uri = url(s"price/$letter"),
-      entity = HttpEntity(ContentTypes.`application/json`, write(Price(price)))))
+      entity = HttpEntity(ContentTypes.`application/json`, write(Price(price)))
+    ))
 
     def checkPrice(cartId: String, letter: String) =
       for {
@@ -37,15 +38,15 @@ class PutLetterPriceTest(implicit ee: ExecutionEnv)
     } yield check
 
     "respond with status 200" >> {
-      priceLetter.map(_.status) should === (ok200).awaitFor(timeout)
+      priceLetter.map(_.status) should ===(ok200).awaitFor(timeout)
     }
 
     "letter should have set cost" >> {
-      body(all).map(read[Price]) should === (Price(price)).awaitFor(timeout) 
+      body(all).map(read[Price]) should ===(Price(price)).awaitFor(timeout)
     }
 
     "default letter price is 10" >> {
-      body(checkPrice("777", "x")).map(read[Price]) should === (Price(10)).awaitFor(timeout)
+      body(checkPrice("777", "x")).map(read[Price]) should ===(Price(10)).awaitFor(timeout)
     }
 
   }

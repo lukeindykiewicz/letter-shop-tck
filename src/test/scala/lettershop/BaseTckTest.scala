@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 import scala.language.postfixOps
 
-trait BaseTckTest{
+trait BaseTckTest {
 
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
@@ -35,7 +35,7 @@ trait BaseTckTest{
 
   def url(path: String): String = s"http://$host:$port/$path"
 
-  def body(respF : Future[HttpResponse]): Future[String] = 
+  def body(respF: Future[HttpResponse]): Future[String] =
     respF.flatMap(_.entity.toStrict(timeout).map(_.data.utf8String))
 
 }

@@ -23,11 +23,11 @@ class PutLettersTest(implicit ee: ExecutionEnv)
     } yield get
 
     "respond with status 200" >> {
-      put.map(_.status) should === (ok200).awaitFor(timeout)
+      put.map(_.status) should ===(ok200).awaitFor(timeout)
     }
 
     "overwrite letters in cart" >> {
-      body(getCart).map(read[Cart]) should === (Cart(overwritten)).awaitFor(timeout)
+      body(getCart).map(read[Cart]) should ===(Cart(overwritten)).awaitFor(timeout)
     }
 
   }

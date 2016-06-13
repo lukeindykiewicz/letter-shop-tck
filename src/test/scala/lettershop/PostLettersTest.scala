@@ -15,7 +15,7 @@ class PostLettersTest(implicit ee: ExecutionEnv)
 
     val cart = "cart/444"
     val post = for {
-      _ <- go(HttpRequest(method = PUT, uri = url(cart)))//clean the cart
+      _ <- go(HttpRequest(method = PUT, uri = url(cart))) //clean the cart
       abc <- go(HttpRequest(method = POST, uri = url(s"$cart/abc")))
     } yield abc
     val getCart = for {
@@ -25,11 +25,11 @@ class PostLettersTest(implicit ee: ExecutionEnv)
     } yield get
 
     "respond with status 200" >> {
-      post.map(_.status) should === (ok200).awaitFor(timeout)
+      post.map(_.status) should ===(ok200).awaitFor(timeout)
     }
 
     "add letters to cart" >> {
-      body(getCart).map(read[Cart]) should === (Cart("abcXY")).awaitFor(timeout)
+      body(getCart).map(read[Cart]) should ===(Cart("abcXY")).awaitFor(timeout)
     }
 
   }
