@@ -9,8 +9,6 @@ import org.specs2.mutable.Specification
 
 import upickle.default._
 
-case class Price(price: Double)
-
 class PutLetterPriceTest(implicit ee: ExecutionEnv)
     extends Specification
     with BaseTckTest {

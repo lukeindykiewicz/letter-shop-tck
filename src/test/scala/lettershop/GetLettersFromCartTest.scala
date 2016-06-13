@@ -7,8 +7,6 @@ import org.specs2.concurrent.ExecutionEnv
 
 import upickle.default._
 
-case class Cart(letters: String)
-
 class GetLettersFromCartTest(implicit ee: ExecutionEnv)
     extends Specification
     with BaseTckTest {
