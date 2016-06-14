@@ -1,25 +1,13 @@
 package lettershop
 
-import akka.http.scaladsl.model.HttpRequest
-import akka.http.scaladsl.model.HttpMethods._
 import org.specs2.concurrent.ExecutionEnv
 import org.specs2.mutable.Specification
-import java.util.UUID
 
 import upickle.default._
 
 class CheckCartPriceTest(implicit ee: ExecutionEnv)
     extends Specification
     with BaseTckTest {
-
-  def checkCartPrice(letters: String, promoCode: Option[String] = None) = {
-    val cartId = UUID.randomUUID.toString
-    val promo = promoCode.map(p => s"?promo=$p").getOrElse("")
-    for {
-      _ <- go(HttpRequest(PUT, url(s"cart/$cartId/$letters")))
-      check <- go(HttpRequest(uri = url(s"check/$cartId$promo")))
-    } yield check
-  }
 
   "CheckCartPriceTest" should {
 
