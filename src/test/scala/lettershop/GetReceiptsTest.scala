@@ -37,9 +37,9 @@ class GetReceiptsTest(implicit ee: ExecutionEnv)
       val receipts = body(resp).map(read[List[ReceiptHistory]])
       receipts.map(_.length) should be_>=(3).awaitFor(timeout)
       receipts should contain(allOf(
-        matchA[ReceiptHistory].price(30).letters(abc),
-        matchA[ReceiptHistory].price(20).letters(de),
-        matchA[ReceiptHistory].price(40).letters(fghi)
+        matchA[ReceiptHistory].letters(abc).price(30),
+        matchA[ReceiptHistory].letters(de).price(20),
+        matchA[ReceiptHistory].letters(fghi).price(40)
       )).awaitFor(timeout)
     }
 

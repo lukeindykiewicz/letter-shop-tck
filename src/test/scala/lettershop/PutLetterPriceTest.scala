@@ -5,15 +5,26 @@ import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.HttpEntity
 import org.specs2.concurrent.ExecutionEnv
+import org.specs2.mutable.After
 import org.specs2.mutable.Specification
+import scala.concurrent.Await
 
 import upickle.default._
+
+trait RestoreDefaultPrices extends After with BaseTckTest {
+  def after =
+    Await.ready(go(HttpRequest(
+      method = PUT,
+      uri = url(s"price/A"),
+      entity = HttpEntity(ContentTypes.`application/json`, write(Price(10)))
+    )), timeout)
+}
 
 class PutLetterPriceTest(implicit ee: ExecutionEnv)
     extends Specification
     with BaseTckTest {
 
-  "PutLetterPrice" should {
+  "PutLetterPrice" in new RestoreDefaultPrices {
 
     val letter = "A"
     val price: Double = 13.5
